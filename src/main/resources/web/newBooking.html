@@ -1,0 +1,43 @@
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+        <title>Restaurant</title>
+    </head>
+    <body>
+
+        <header>
+            <h1>New Booking</h1>
+            <nav>
+                <a href="/">Home</a>&emsp;<a href="/newBooking">New Booking</a>&emsp;<a href="/viewBookings">View Scheduled Bookings</a>
+            </nav>
+        </header>
+        <br/>
+        <form action="/scheduleBooking" method="post">
+            <main>
+                <table>
+                    <tr>
+                        <td><label for="lname">Last name:</label></td>
+                        <td style="text-align: left;"><input type="text" id="lName" name="lName" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="lname">First name:</label></td>
+                        <td style="text-align: left;"><input type="text" id="fName" name="fName" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><label for="bookingDate">Date:</label></td>
+                        <td style="text-align: left;"><input type="datetime-local" id="bookingDate" name="bookingDate"/></td>
+                    </tr>
+                    <tr>
+                        <td><label for="tSize">Table Size:</label></td>
+                        <td style="text-align: left;"><input type="number" id="tSize" name="tSize" style="width: 100%;"></td>
+                    </tr>
+                </table>
+                <p>
+                    <input type="submit" value="Schedule Booking" id="scheduleBooking">
+                </p>
+                <div class="messages"></div>
+            </main>
+        </form>
+    </body>
+</html>

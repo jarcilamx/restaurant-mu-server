@@ -1,0 +1,31 @@
+<html lang="en">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta charset="UTF-8">
+        <title>Restaurant</title>
+    </head>
+    <body>
+
+        <header>
+            <h1>Bookings</h1>
+            <nav>
+                <a href="/">Home</a>&emsp;<a href="/newBooking">New Booking</a>&emsp;<a href="/viewBookings">View Scheduled Bookings</a>
+            </nav>
+        </header>
+        <br/>
+        <form action="/searchBookings" method="post">
+            <main>
+                <table>
+                    <tr>
+                        <td style="text-align: left;"><label for="bookingDate">Date:</label></td>
+                        <td style="text-align: left;"><input type="datetime-local" id="selectedDate" name="selectedDate"/></td>
+                    </tr>
+                </table>
+                <p>
+                    <input type="submit" value="Search Bookings" id="scheduleBooking">
+                </p>
+                <div class="bookings"></div>
+            </main>
+        </form>
+    </body>
+</html>
