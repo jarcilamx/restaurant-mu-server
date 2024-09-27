@@ -33,6 +33,7 @@ public class ScheduleBookingHandler implements RouteHandler {
         String dateStr = request.form().get("bookingDate");
         String fName = request.form().get("fName");
         String lName = request.form().get("lName");
+        String mName = request.form().get("mName");
         int tSize = request.form().getInt("tSize", 0);
         StringBuilder htmlResponse = new StringBuilder();
         htmlResponse.append(Constants.linksHeaderHtml);
@@ -41,7 +42,7 @@ public class ScheduleBookingHandler implements RouteHandler {
             htmlResponse.append("All fields are mandatory. Table Size must be greater than 0");
             htmlResponse.append("<br/><a href=\"/newBooking\"><-Go Back</a></p></main>");
         } else {
-            Booking booking = new Booking(Commons.convertStringToDate(dateStr), fName, lName, tSize);
+            Booking booking = new Booking(Commons.convertStringToDate(dateStr), fName, lName, tSize, mName);
 
             log.info("New Booking scheduled:\tFirst Name:" + booking.getFirstName() + "\tLast Name:" + booking.getLastName()
                     + "\tTable Size:" + booking.getTableSize() + "\tBooking Date: " + booking.getBookingDateStr());
@@ -55,6 +56,12 @@ public class ScheduleBookingHandler implements RouteHandler {
             htmlResponse.append(booking.getLastName());
             htmlResponse.append(Constants.tdClose);
             htmlResponse.append(Constants.trOpen);
+            htmlResponse.append("<td><label>Middle Name:</label></td>");
+            htmlResponse.append(Constants.trClose);
+            htmlResponse.append(Constants.tdOpen);
+            htmlResponse.append(booking.getMiddletName());
+            htmlResponse.append(Constants.tdClose);
+            htmlResponse.append(Constants.trClose);
             htmlResponse.append("<td><label>First name:</label></td>");
             htmlResponse.append(Constants.trClose);
             htmlResponse.append(Constants.tdOpen);

@@ -16,11 +16,13 @@ public class Booking {
     private String lastName;
     private Integer tableSize;
     private Date bookingDate;
+    private String middletName;
 
-    public Booking(Date bookingDate, String firstName, String lastName, Integer tableSize) {
+    public Booking(Date bookingDate, String firstName, String lastName, Integer tableSize, String middletName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.tableSize = tableSize;
+        this.middletName = middletName;
         if (null != bookingDate) {
             this.bookingDate = bookingDate;
             this.bookingDateStr = this.bookingDate.toString();
