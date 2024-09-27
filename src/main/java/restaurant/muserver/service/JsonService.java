@@ -56,7 +56,7 @@ public class JsonService {
     }
 
     public static void main(String[] args) {
-        String qualifier = "{'2023-01-01', '2020-12-31', '2028-01-01', '2025-12-31'}";
+        String qualifier = " ( <= '2023-01-01' & >= '2020-12-31' ) | ( <= '2028-01-01' & >= '2025-12-31' )";
         JsonService jsonService = new JsonService();
         jsonService.processStringToJson(getJsonStr());
         jsonService.getJsonByDate(qualifier).forEach(input -> {
@@ -68,25 +68,30 @@ public class JsonService {
         dates = new ArrayList<>();
         DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
-        int dateLength = 11;
-        String subString = qualifierDateStr.replace(" ", "").replace("{", "").replace(",", "");
+        String substring = qualifierDateStr.replace(" ", "").replace("{", "").replace(",", "");
         QualifierDate qualifierDate;
         String dateStr = "";
-
         try {
-            while (subString.indexOf('\'') >= 0) {
-                dateStr = subString.substring(1, dateLength);
-                subString = subString.substring(dateLength + 1);
-                if (!dates.isEmpty()) {
-                    qualifierDate = (null != getLastDate().getToDate() && null != getLastDate().getFromDate()) ? new QualifierDate() : getLastDate();
-                } else {
-                    qualifierDate = new QualifierDate();
-                }
-                if (null == qualifierDate.getToDate()) {
-                    qualifierDate.setToDate(formatter.parse(dateStr));
+            while (substring.indexOf(')') >= 0) {
+                int index1 = substring.indexOf('(') + 1;
+                int index2 = substring.indexOf(')');
+                String[] datesStrArr = substring.substring(index1, index2).split("&");
+                if (datesStrArr.length == 2) {
+                    if (!dates.isEmpty()) {
+                        qualifierDate = (null != getLastDate().getToDate() && null != getLastDate().getFromDate()) ? new QualifierDate() : getLastDate();
+                    } else {
+                        qualifierDate = new QualifierDate();
+                    }
+                    boolean isToDate = datesStrArr[0].charAt(0) == '<';
+                    if (isToDate) {
+                        qualifierDate.setFromDate(formatter.parse(datesStrArr[1].substring(3, 13)));
+                        qualifierDate.setToDate(formatter.parse(datesStrArr[0].substring(3, 13)));
+                    } else {
+                        qualifierDate.setFromDate(formatter.parse(datesStrArr[0].substring(3, 13)));
+                        qualifierDate.setToDate(formatter.parse(datesStrArr[1].substring(3, 13)));
+                    }
                     dates.add(qualifierDate);
-                } else if (null == qualifierDate.getFromDate()) {
-                    qualifierDate.setFromDate(formatter.parse(dateStr));
+                    substring = ((index2 + 2) < substring.length()) ? substring.substring(index2 + 2): "";
                 }
             }
         } catch (ParseException ex) {
